@@ -70,7 +70,7 @@ for i = 1:length(shps)
    x(length(tmp)+1) = x(1);
    y(length(tmp)+1) = y(1);
    z1(length(tmp)+1) = z1(1);
-   z2(length(tmp)+1) = z2(2);
+   z2(length(tmp)+1) = z2(1);
    line(x,y,z1)
    line(x,y,z2,'Color','red')
 end
