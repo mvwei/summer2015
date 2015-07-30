@@ -6,16 +6,18 @@ global g_locs
 g_w = [1/6,1/6,1/6];
 g_locs = [1/6,1/6; 2/3, 1/6; 1/6, 2/3];
 
-[shps,pts,pts_ind,edge_pts]=mkgridsq(30,30, pi(), pi());
+[shps,pts,pts_ind,edge_pts]=mkgridsq(10,10, pi(), pi());
 
 A = zeros(length(pts_ind),length(pts_ind));
 f = zeros(length(pts_ind),1);
 source = ones(length(pts_ind),1);
+real = zeros(length(pts_ind),1);
 
 for i = 1:length(source)
     x = pts_ind(i, 2);
     y = pts_ind(i, 3);
     source(i) = -8*sin(2*x)*sin(2*y);
+    real(i) = sin(2*x)*sin(2*y);
 end
 
 pts_local = zeros(length(shps(1,:)),3);
@@ -57,17 +59,26 @@ for i = 1:length(shps)
    tmp = shps(i,:);
    x = zeros(1,length(tmp)+1);
    y = zeros(1,length(tmp)+1);
-   z = zeros(1,length(tmp)+1);
+   z1 = zeros(1,length(tmp)+1);
+   z2 = zeros(1,length(tmp)+1);
    for j = 1:length(tmp)
       x(j) = pts_ind(tmp(j),2);
       y(j) = pts_ind(tmp(j),3);
-      z(j) = sol(tmp(j));
+      z1(j) = sol(tmp(j));
+      z2(j) = real(tmp(j));
    end
    x(length(tmp)+1) = x(1);
    y(length(tmp)+1) = y(1);
-   z(length(tmp)+1) = z(1);
-   line(x,y,z)
+   z1(length(tmp)+1) = z1(1);
+   z2(length(tmp)+1) = z2(2);
+   line(x,y,z1)
+   line(x,y,z2,'Color','red')
 end
+
+sum((real - sol).^2)
+
+size(real)
+size(sol)
 
 end
 
